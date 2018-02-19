@@ -1,0 +1,1 @@
+add_library(processor SHARED python_processor.cpp org_negasoft_ByteProcess.cpp)

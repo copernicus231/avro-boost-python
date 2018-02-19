@@ -1,0 +1,9 @@
+{
+	"namespace":"org.negasoft",
+    "name": "Result",
+    "type":"record",
+    "fields":[
+        {"name":"func", "type":"int"},
+        {"name":"func2","type":"int"}
+    ] 
+}

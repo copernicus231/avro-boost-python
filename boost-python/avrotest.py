@@ -7,10 +7,14 @@ Created on Feb 2, 2018
 def func(x,y):
     return x+y
 def func2(r):
+    actt = 0
     for p in r.children:
-        print p.stringvalue
+        actt = actt + p.intvalue
+    return actt
 def process(record):
-    val=func(record.intvalue,record.intvalue)
-    print val
-    func2(record)
-    return
+    d={}
+    d['func']=func(record.intvalue,record.intvalue)
+    print d['func']
+    d['func2']=func2(record)
+    print d['func2']
+    return d
