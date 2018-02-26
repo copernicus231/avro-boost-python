@@ -1,0 +1,36 @@
+#ifndef SCHEMA_{{module.upper()}}_MODULE_HPP_
+#define SCHEMA_PARENT_MODULE_HPP_
+
+#include <boost/python.hpp>
+#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include <boost/python/suite/indexing/indexing_suite.hpp>
+
+#include "{{module}}.hpp"
+namespace bp = boost::python;
+namespace {{namespace}}{
+{%- for struct in arrays %}
+	typedef std::vector<{{struct}} > {{struct}}s;
+
+	auto operator==( {{struct}} const& u, {{struct}} const& v )
+	    -> bool
+	{
+	    return true;
+	}
+{% endfor %}
+}
+
+BOOST_PYTHON_MODULE({{module}})
+{
+{%- for struct in arrays %}
+	bp::class_<{{namespace}}::{{struct}}s>("{{struct}}s").def(bp::vector_indexing_suite<{{namespace}}::{{struct}}s>());
+{% endfor %}
+
+{%- for struct in structs %}
+	bp::class_<{{namespace}}::{{struct.get_prop('name')}}>("{{struct.get_prop('name')}}")
+	{%- for field in struct.get_prop('fields') %}.def_readonly("{{field.get_prop('name')}}",&{{namespace}}::{{struct.get_prop('name')}}::{{field.get_prop('name')}})
+	{% endfor %};
+{% endfor %}
+}
+
+#endif /* SCHEMA_{{module.upper()}}_MODULE_HPP_ */
+
